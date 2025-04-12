@@ -9,5 +9,5 @@ if [ "$(ps aux | grep -c Karabiner-VirtualHIDDevice-Daemon)" -le "1" ]; then
 fi
 
 while true; do
-    kanata $@
+    HEXINPUT=false kanata $@
 done
