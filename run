@@ -1,0 +1,13 @@
+#!/bin/sh
+if [ "$EUID" -ne 0 ]
+  then echo "Please run as root"
+  exit
+fi
+
+if [ "$(ps aux | grep -c Karabiner-VirtualHIDDevice-Daemon)" -le "1" ]; then
+    /Library/Application\ Support/org.pqrs/Karabiner-DriverKit-VirtualHIDDevice/Applications/Karabiner-VirtualHIDDevice-Daemon.app/Contents/MacOS/Karabiner-VirtualHIDDevice-Daemon &
+fi
+
+while true; do
+    kanata $@
+done

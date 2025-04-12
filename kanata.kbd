@@ -1,0 +1,235 @@
+;; vim: sw=2 ts=2:
+(defvar
+  tap-timeout   75
+  hold-timeout  225
+  macro-delay   10
+  tt $tap-timeout
+  ht $hold-timeout
+  md $macro-delay
+)
+
+(defcfg
+  process-unmapped-keys yes
+  concurrent-tap-hold yes
+  rapid-event-delay 7
+  macos-dev-names-exclude (
+    "Basilisk X HyperSpeed"
+  )
+  log-layer-changes no
+  ;;override-release-on-activation yes
+)
+
+(deftemplate tap-hold (tap hold) (tap-hold $tt $ht $tap $hold))
+(deftemplate hold-layer (layer) (tap-hold $tt $ht _ (layer-toggle $layer)))
+(deftemplate shift-fork (lower upper) (fork $lower $upper (lsft rsft)))
+(deftemplate navnext (key) (macro (unmod ]) $key))
+(deftemplate navprev (key) (macro (unmod [) $key))
+
+;; Reduce timeout for ESC
+(deftemplate tap-hold-layer (key layer) (tap-hold 0 $ht $key (layer-toggle $layer)))
+
+(defsrc)
+
+  ;; caps esc ] [ ' ; / .  ,)
+  ;;caps
+  ;;grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  ;;tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
+  ;;esc  a    s    d    f    g    h    j    k    l    ;    '    ret
+  ;;lsft z    x    c    v    b    n    m    ,    .    /    rsft
+  ;;lctl lmet lalt           spc            ralt rmet rctl
+
+(deflayermap (base)
+  caps  (t! tap-hold-layer esc misc)
+  esc  (t! tap-hold-layer esc misc)
+  ]     (t! hold-layer vimnav-next)
+  [     (t! hold-layer vimnav-prev)
+
+  '     (tap-hold $tt $ht ' (layer-toggle accent))
+  ;     (t! hold-layer cursor)
+
+)
+
+(platform (macos) (defalias context-menu (arbitrary-code 204 )))
+(platform (win winiov2 wintercept linux) (defalias context-menu cmp))
+
+(deflayermap (cursor)
+  grv lrld
+
+  q home   w up     e end     r pgup
+  a left   s down   d right   f pgdn
+
+  z del x kp+ c bspc v @context-menu
+
+  ' (layer-toggle function)
+)
+
+(platform (macos) (defalias prnt (arbitrary-code 210 )))
+(platform (win winiov2 wintercept linux) (defalias prnt prnt))
+
+(deflayermap (misc)
+
+  0 caps
+  - (caps-word 5000)
+  = @prnt
+  bspc del
+  \ brk
+
+  , 1
+  . 2
+  / 3
+  k 4
+  l 5
+  ; 6
+  i 7
+  o 8
+  p 9
+  rmet 0
+)
+
+;;(platform (macos) (defalias À (macro A-0 A-0 A-c A-0)))
+;;(platform (macos) (defalias Á (macro A-0 A-0 A-c A-1)))
+;;(platform (macos) (defalias Â (macro A-0 A-0 A-c A-2)))
+;;(platform (macos) (defalias Ã (macro A-0 A-0 A-c A-3)))
+;;(platform (macos) (defalias Ç (macro A-0 A-0 A-c A-7)))
+;;(platform (macos) (defalias É (macro A-0 A-0 A-c A-9)))
+;;(platform (macos) (defalias Ê (macro A-0 A-0 A-c A-a)))
+;;(platform (macos) (defalias Í (macro A-0 A-0 A-c A-d)))
+;;(platform (macos) (defalias Ó (macro A-0 A-0 A-d A-3)))
+;;(platform (macos) (defalias Ô (macro A-0 A-0 A-d A-4)))
+;;(platform (macos) (defalias Õ (macro A-0 A-0 A-d A-5)))
+;;(platform (macos) (defalias Ú (macro A-0 A-0 A-d A-a)))
+;;(platform (macos) (defalias à (macro A-0 A-0 A-e A-0)))
+;;(platform (macos) (defalias á (macro A-0 A-0 A-e A-1)))
+;;(platform (macos) (defalias â (macro A-0 A-0 A-e A-2)))
+;;(platform (macos) (defalias ã (macro A-0 A-0 A-e A-3)))
+;;(platform (macos) (defalias ç (macro A-0 A-0 A-e A-7)))
+;;(platform (macos) (defalias é (macro A-0 A-0 A-e A-9)))
+;;(platform (macos) (defalias ê (macro A-0 A-0 A-e A-a)))
+;;(platform (macos) (defalias í (macro A-0 A-0 A-e A-d)))
+;;(platform (macos) (defalias ó (macro A-0 A-0 A-f A-3)))
+;;(platform (macos) (defalias ô (macro A-0 A-0 A-f A-4)))
+;;(platform (macos) (defalias õ (macro A-0 A-0 A-f A-5)))
+;;(platform (macos) (defalias ú (macro A-0 A-0 A-f A-a)))
+
+
+(platform (macos) (defalias À (macro A-grv S-a)))
+(platform (macos) (defalias Á (macro A-e S-a)))
+(platform (macos) (defalias Â (macro A-i S-a)))
+(platform (macos) (defalias Ã (macro A-n S-a)))
+(platform (macos) (defalias Ç (macro A-S-c)))
+(platform (macos) (defalias É (macro A-e S-e)))
+(platform (macos) (defalias Ê (macro A-i S-e)))
+(platform (macos) (defalias Í (macro A-e S-i)))
+(platform (macos) (defalias Ó (macro A-e S-o)))
+(platform (macos) (defalias Ô (macro A-i S-o)))
+(platform (macos) (defalias Õ (macro A-n S-o)))
+(platform (macos) (defalias Ú (macro A-e S-u)))
+
+(platform (macos) (defalias à (macro A-grv a)))
+(platform (macos) (defalias á (macro A-e a)))
+(platform (macos) (defalias â (macro A-i a)))
+(platform (macos) (defalias ã (macro A-n a)))
+(platform (macos) (defalias ç (macro A-c)))
+(platform (macos) (defalias é (macro A-e e)))
+(platform (macos) (defalias ê (macro A-i e)))
+(platform (macos) (defalias í (macro A-e i)))
+(platform (macos) (defalias ó (macro A-e o)))
+(platform (macos) (defalias ô (macro A-i o)))
+(platform (macos) (defalias õ (macro A-n o)))
+(platform (macos) (defalias ú (macro A-e u)))
+
+(platform (win winiov2 wintercept linux) (defalias À (unicode À)))
+(platform (win winiov2 wintercept linux) (defalias Á (unicode Á)))
+(platform (win winiov2 wintercept linux) (defalias Â (unicode Â)))
+(platform (win winiov2 wintercept linux) (defalias Ã (unicode Ã)))
+(platform (win winiov2 wintercept linux) (defalias Ç (unicode Ç)))
+(platform (win winiov2 wintercept linux) (defalias É (unicode É)))
+(platform (win winiov2 wintercept linux) (defalias Ê (unicode Ê)))
+(platform (win winiov2 wintercept linux) (defalias Í (unicode Í)))
+(platform (win winiov2 wintercept linux) (defalias Ó (unicode Ó)))
+(platform (win winiov2 wintercept linux) (defalias Ô (unicode Ô)))
+(platform (win winiov2 wintercept linux) (defalias Õ (unicode Õ)))
+(platform (win winiov2 wintercept linux) (defalias Ú (unicode Ú)))
+(platform (win winiov2 wintercept linux) (defalias à (unicode à)))
+(platform (win winiov2 wintercept linux) (defalias á (unicode á)))
+(platform (win winiov2 wintercept linux) (defalias â (unicode â)))
+(platform (win winiov2 wintercept linux) (defalias ã (unicode ã)))
+(platform (win winiov2 wintercept linux) (defalias ç (unicode ç)))
+(platform (win winiov2 wintercept linux) (defalias é (unicode é)))
+(platform (win winiov2 wintercept linux) (defalias ê (unicode ê)))
+(platform (win winiov2 wintercept linux) (defalias í (unicode í)))
+(platform (win winiov2 wintercept linux) (defalias ó (unicode ó)))
+(platform (win winiov2 wintercept linux) (defalias ô (unicode ô)))
+(platform (win winiov2 wintercept linux) (defalias õ (unicode õ)))
+(platform (win winiov2 wintercept linux) (defalias ú (unicode ú)))
+
+(platform (macos) (deftemplate accent (lower upper) (fork $lower (multi (release-key lsft) (release-key rsft) $upper) (lsft rsft))))
+(platform (win winiov2 wintercept linux) (deftemplate accent (lower upper) (fork $lower $upper (lsft rsft))))
+
+(defalias _á (t! accent @á @Á))
+(defalias _ú (t! accent @ú @Ú))
+(defalias _í (t! accent @í @Í))
+(defalias _é (t! accent @é @É))
+(defalias _ê (t! accent @ê @Ê))
+(defalias _â (t! accent @â @Â))
+(defalias _ó (t! accent @ó @Ó))
+(defalias _ô (t! accent @ô @Ô))
+(defalias _à (t! accent @à @À))
+(defalias _ã (t! accent @ã @Ã))
+(defalias _ç (t! accent @ç @Ç))
+(defalias _õ (t! accent @õ @Õ))
+
+(deflayermap (accent)
+  ; (layer-toggle function)
+
+  q @_ú w @_í e @_é r @_ê
+  a @_á s @_â d @_ó f @_ô
+  z @_à x @_ã c @_ç v @_õ
+
+)
+
+(deflayermap (function)
+  grv nlk
+
+  z  f1
+  x  f2
+  c  f3
+  a  f4
+  s  f5
+  d  f6
+  q  f7
+  w  f8
+  e  f9
+  r  f10
+  f  f11
+  v  f12
+)
+
+(deflayermap (vimnav-next)
+  q (t! navnext q)
+  e (t! navnext e)
+  t (t! navnext t)
+  a (t! navnext a)
+  s (t! navnext s)
+  f (t! navnext f)
+  l (t! navnext l)
+  c (t! navnext c)
+  b (t! navnext b)
+  n (t! navnext n)
+  spc (t! navnext spc)
+)
+
+(deflayermap (vimnav-prev)
+  q (t! navprev q)
+  e (t! navprev e)
+  t (t! navprev t)
+  a (t! navprev a)
+  s (t! navprev s)
+  f (t! navprev f)
+  l (t! navprev l)
+  c (t! navprev c)
+  b (t! navprev b)
+  n (t! navprev n)
+  spc (t! navprev spc)
+)
+
