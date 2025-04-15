@@ -91,6 +91,9 @@
 (deflayermap (function)
   grv nlk
 
+  1 brdown
+  2 brup
+
   z  f1
   x  f2
   c  f3
