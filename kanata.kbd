@@ -2,7 +2,7 @@
 
 (defvar
   tap-timeout   75
-  hold-timeout  225
+  hold-timeout  350
   macro-delay   10
   tt $tap-timeout
   ht $hold-timeout
@@ -20,7 +20,7 @@
 )
 
 (deftemplate tap-hold (tap hold) (tap-hold $tt $ht $tap $hold))
-(deftemplate hold-layer (layer) (tap-hold $tt $ht _ (layer-toggle $layer)))
+(deftemplate hold-layer (layer) (tap-hold-press-timeout $tt $ht _ (layer-toggle $layer) _))
 (deftemplate shift-fork (lower upper) (fork $lower $upper (lsft rsft)))
 (deftemplate navnext (key) (macro (unmod ]) $key))
 (deftemplate navprev (key) (macro (unmod [) $key))
@@ -36,7 +36,7 @@
   ]     (t! hold-layer vimnav-next)
   [     (t! hold-layer vimnav-prev)
 
-  '     (tap-hold $tt $ht ' (layer-toggle accent))
+  '     (t! hold-layer accent)
   ;     (t! hold-layer cursor)
 )
 
