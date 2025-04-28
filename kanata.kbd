@@ -33,8 +33,10 @@
 (deflayermap (base)
   caps  (t! tap-hold-layer esc misc)
   esc  (t! tap-hold-layer esc misc)
-  ]     (t! hold-layer vimnav-next)
-  [     (t! hold-layer vimnav-prev)
+  ;;]     (t! hold-layer vimnav-next)
+  ;;[     (t! hold-layer vimnav-prev)
+
+  [ (t! hold-layer function)
 
   '     (tap-hold $tt $ht ' (layer-toggle accent))
   ;     (t! hold-layer cursor)
@@ -46,12 +48,13 @@
 (deflayermap (cursor)
   grv lrld
 
+  k lctl l lalt
+
   q home   w up     e end     r pgup
   a left   s down   d right   f pgdn
 
   z del x kp+ c bspc v @context-menu
 
-  ' (layer-toggle function)
 )
 
 (platform (macos) (defalias prnt (arbitrary-code 210 )))
@@ -80,7 +83,6 @@
 (include "accents.kbd")
 
 (deflayermap (accent)
-  ; (layer-toggle function)
 
   q @ú w @í e @é r @ê
   a @á s @â d @ó f @ô
@@ -91,21 +93,15 @@
 (deflayermap (function)
   grv nlk
 
-  1 brdown
-  2 brup
+  1 brdown 2 brup
+  3 mute 4 vold 5 volu
+  6 bldn 7 blup
 
-  z  f1
-  x  f2
-  c  f3
-  a  f4
-  s  f5
-  d  f6
-  q  f7
-  w  f8
-  e  f9
-  r  f10
-  f  f11
-  v  f12
+  o lctl p lalt
+
+  q  f7 w  f8 e  f9 r  f10
+  a  f4 s  f5 d  f6 f  f11
+  z  f1 x  f2 c  f3 v  f12
 )
 
 (deflayermap (vimnav-next)
