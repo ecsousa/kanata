@@ -68,16 +68,10 @@
   bspc del
   \ brk
 
-  , 1
-  . 2
-  / 3
-  k 4
-  l 5
-  ; 6
-  i 7
-  o 8
-  p 9
-  rmet 0
+  i 7 o 8 p 9 [ bspc
+  k 4 l 5 ; 6 ' -
+  , 1 . 2 / 3
+  rmet 0 ralt .
 )
 
 (include "accents.kbd")
