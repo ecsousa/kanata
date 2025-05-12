@@ -38,15 +38,27 @@
 
   [ (t! hold-layer function)
 
-  '     (tap-hold $tt $ht ' (layer-toggle accent))
+  ;;' (switch
+      ;;((input virtual com.parallels.desktop.console)) ' break
+      ;;() (tap-hold $tt $ht ' (layer-toggle accent)) break
+    ;;)
+
+  ' (tap-hold $tt $ht ' (layer-toggle accent))
+
   ;     (t! hold-layer cursor)
+)
+
+(defvirtualkeys
+  com.parallels.desktop.console nop0
+  com.apple.keylayout.US nop0
+  com.apple.keylayout.UnicodeHexInput nop0
 )
 
 (platform (macos) (defalias context-menu (arbitrary-code 204 )))
 (platform (win winiov2 wintercept linux) (defalias context-menu cmp))
 
 (deflayermap (cursor)
-  grv lrld
+  grv ;
 
   k lctl l lalt
 
@@ -57,10 +69,11 @@
 
 )
 
-(platform (macos) (defalias prnt (arbitrary-code 210 )))
+(platform (macos) (defalias prnt S-M-4))
 (platform (win winiov2 wintercept linux) (defalias prnt prnt))
 
 (deflayermap (misc)
+  grv lrld
 
   0 caps
   - (caps-word 5000)
@@ -74,9 +87,10 @@
   rmet 0 ralt .
 )
 
-(include "accents.kbd")
+(include "accents-unicode.kbd")
 
 (deflayermap (accent)
+  grv '
 
   q @ú w @í e @é r @ê
   a @á s @â d @ó f @ô
@@ -85,7 +99,7 @@
 )
 
 (deflayermap (function)
-  grv nlk
+  grv [
 
   1 brdown 2 brup
   3 mute 4 vold 5 volu

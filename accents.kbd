@@ -1,36 +1,55 @@
 ;; vim: sw=2 ts=2:
 
-(platform (macos) (defaliasenvcond (HEXINPUT true)
-  _à (macro A-0 A-0 A-e A-0) _À (macro A-0 A-0 A-c A-0)
-  _á (macro A-0 A-0 A-e A-1) _Á (macro A-0 A-0 A-c A-1)
-  _â (macro A-0 A-0 A-e A-2) _Â (macro A-0 A-0 A-c A-2)
-  _ã (macro A-0 A-0 A-e A-3) _Ã (macro A-0 A-0 A-c A-3)
-  _ç (macro A-0 A-0 A-e A-7) _Ç (macro A-0 A-0 A-c A-7)
-  _é (macro A-0 A-0 A-e A-9) _É (macro A-0 A-0 A-c A-9)
-  _ê (macro A-0 A-0 A-e A-a) _Ê (macro A-0 A-0 A-c A-a)
-  _í (macro A-0 A-0 A-e A-d) _Í (macro A-0 A-0 A-c A-d)
-  _ó (macro A-0 A-0 A-f A-3) _Ó (macro A-0 A-0 A-d A-3)
-  _ô (macro A-0 A-0 A-f A-4) _Ô (macro A-0 A-0 A-d A-4)
-  _õ (macro A-0 A-0 A-f A-5) _Õ (macro A-0 A-0 A-d A-5)
-  _ú (macro A-0 A-0 A-f A-a) _Ú (macro A-0 A-0 A-d A-a)
-))
+;;(platform (macos) (deftemplate layout (us hex) (switch
+  ;;((input virtual com.apple.keylayout.UnicodeHexInput)) $hex break
+  ;;() $us break
+;;)))
+;;
+;;(platform (macos) (defalias
+  ;;;;hex inputs
+  ;;hex-à (macro A-0 A-0 A-e A-0) hex-À (macro A-0 A-0 A-c A-0)
+  ;;hex-á (macro A-0 A-0 A-e A-1) hex-Á (macro A-0 A-0 A-c A-1)
+  ;;hex-â (macro A-0 A-0 A-e A-2) hex-Â (macro A-0 A-0 A-c A-2)
+  ;;hex-ã (macro A-0 A-0 A-e A-3) hex-Ã (macro A-0 A-0 A-c A-3)
+  ;;hex-ç (macro A-0 A-0 A-e A-7) hex-Ç (macro A-0 A-0 A-c A-7)
+  ;;hex-é (macro A-0 A-0 A-e A-9) hex-É (macro A-0 A-0 A-c A-9)
+  ;;hex-ê (macro A-0 A-0 A-e A-a) hex-Ê (macro A-0 A-0 A-c A-a)
+  ;;hex-í (macro A-0 A-0 A-e A-d) hex-Í (macro A-0 A-0 A-c A-d)
+  ;;hex-ó (macro A-0 A-0 A-f A-3) hex-Ó (macro A-0 A-0 A-d A-3)
+  ;;hex-ô (macro A-0 A-0 A-f A-4) hex-Ô (macro A-0 A-0 A-d A-4)
+  ;;hex-õ (macro A-0 A-0 A-f A-5) hex-Õ (macro A-0 A-0 A-d A-5)
+  ;;hex-ú (macro A-0 A-0 A-f A-a) hex-Ú (macro A-0 A-0 A-d A-a)
+;;
+  ;;;;us layout inputs
+  ;;us-à (macro A-grv a) us-À (macro A-grv S-a)
+  ;;us-á (macro A-e a) us-Á (macro A-e S-a)
+  ;;us-â (macro A-i a) us-Â (macro A-i S-a)
+  ;;us-ã (macro A-n a) us-Ã (macro A-n S-a)
+  ;;us-ç (macro A-c) us-Ç (macro A-S-c)
+  ;;us-é (macro A-e e) us-É (macro A-e S-e)
+  ;;us-ê (macro A-i e) us-Ê (macro A-i S-e)
+  ;;us-í (macro A-e i) us-Í (macro A-e S-i)
+  ;;us-ó (macro A-e o) us-Ó (macro A-e S-o)
+  ;;us-ô (macro A-i o) us-Ô (macro A-i S-o)
+  ;;us-õ (macro A-n o) us-Õ (macro A-n S-o)
+  ;;us-ú (macro A-e u) us-Ú (macro A-e S-u)
+;;
+  ;;_à (t! layout @us-à @hex-à) _À (t! layout @us-À @hex-À)
+  ;;_á (t! layout @us-á @hex-á) _Á (t! layout @us-Á @hex-Á)
+  ;;_â (t! layout @us-â @hex-â) _Â (t! layout @us-Â @hex-Â)
+  ;;_ã (t! layout @us-ã @hex-ã) _Ã (t! layout @us-Ã @hex-Ã)
+  ;;_ç (t! layout @us-ç @hex-ç) _Ç (t! layout @us-Ç @hex-Ç)
+  ;;_é (t! layout @us-é @hex-é) _É (t! layout @us-É @hex-É)
+  ;;_ê (t! layout @us-ê @hex-ê) _Ê (t! layout @us-Ê @hex-Ê)
+  ;;_í (t! layout @us-í @hex-í) _Í (t! layout @us-Í @hex-Í)
+  ;;_ó (t! layout @us-ó @hex-ó) _Ó (t! layout @us-Ó @hex-Ó)
+  ;;_ô (t! layout @us-ô @hex-ô) _Ô (t! layout @us-Ô @hex-Ô)
+  ;;_õ (t! layout @us-õ @hex-õ) _Õ (t! layout @us-Õ @hex-Õ)
+  ;;_ú (t! layout @us-ú @hex-ú) _Ú (t! layout @us-Ú @hex-Ú)
+;;))
+;;
 
-(platform (macos) (defaliasenvcond (HEXINPUT false)
-  _à (macro A-grv a) _À (macro A-grv S-a)
-  _á (macro A-e a) _Á (macro A-e S-a)
-  _â (macro A-i a) _Â (macro A-i S-a)
-  _ã (macro A-n a) _Ã (macro A-n S-a)
-  _ç (macro A-c) _Ç (macro A-S-c)
-  _é (macro A-e e) _É (macro A-e S-e)
-  _ê (macro A-i e) _Ê (macro A-i S-e)
-  _í (macro A-e i) _Í (macro A-e S-i)
-  _ó (macro A-e o) _Ó (macro A-e S-o)
-  _ô (macro A-i o) _Ô (macro A-i S-o)
-  _õ (macro A-n o) _Õ (macro A-n S-o)
-  _ú (macro A-e u) _Ú (macro A-e S-u)
-))
-
-(platform (win winiov2 wintercept linux) (defalias
+(platform (win macos winiov2 wintercept linux) (defalias
   _à (unicode à) _À (unicode À)
   _á (unicode á) _Á (unicode Á)
   _â (unicode â) _Â (unicode Â)
@@ -45,8 +64,8 @@
   _ú (unicode ú) _Ú (unicode Ú)
 ))
 
-(platform (macos) (deftemplate accent (lower upper) (fork $lower (multi (release-key lsft) (release-key rsft) $upper) (lsft rsft))))
-(platform (win winiov2 wintercept linux) (deftemplate accent (lower upper) (fork $lower $upper (lsft rsft))))
+;;(platform (macos) (deftemplate accent (lower upper) (fork $lower (multi (release-key lsft) (release-key rsft) $upper) (lsft rsft))))
+(platform (win macos winiov2 wintercept linux) (deftemplate accent (lower upper) (fork $lower $upper (lsft rsft))))
 
 (defalias
   á (t! accent @_á @_Á)
