@@ -78,10 +78,10 @@
   0 caps
   - (caps-word 5000)
   = @prnt
-  bspc del
-  \ brk
+  \ del
+  ] brk
 
-  i 7 o 8 p 9 [ bspc
+  i 7 o 8 p 9 [ +
   k 4 l 5 ; 6 ' -
   , 1 . 2 / 3
   rmet 0 ralt .
