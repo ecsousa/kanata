@@ -30,31 +30,33 @@
 
 (defsrc)
 
+(platform (macos) (defvirtualkeys
+  com.parallels.desktop.console (layer-toggle win-on-mac)
+  com.microsoft.rdc.macos (layer-toggle win-on-mac)
+))
+
+
 (deflayermap (base)
   caps  (t! tap-hold-layer esc misc)
   esc  (t! tap-hold-layer esc misc)
-  ;;]     (t! hold-layer vimnav-next)
-  ;;[     (t! hold-layer vimnav-prev)
 
   [ (t! hold-layer function)
 
-  ;;' (switch
-      ;;((input virtual com.parallels.desktop.console)) ' break
-      ;;() (tap-hold $tt $ht ' (layer-toggle accent)) break
-    ;;)
 
   ' (tap-hold $tt $ht ' (layer-toggle accent))
 
   ;     (t! hold-layer cursor)
 )
 
-(defvirtualkeys
-  com.parallels.desktop.console nop0
-  com.apple.keylayout.US nop0
-  com.apple.keylayout.UnicodeHexInput nop0
-)
+(platform (macos) (deflayermap win-on-mac
+  lalt lmet
+  lmet lalt
+  rmet ralt
+  ralt S-f10
+))
 
-(platform (macos) (defalias context-menu (arbitrary-code 204 )))
+
+(platform (macos) (defalias context-menu S-f10))
 (platform (win winiov2 wintercept linux) (defalias context-menu cmp))
 
 (deflayermap (cursor)
