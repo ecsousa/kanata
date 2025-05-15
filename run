@@ -4,10 +4,44 @@ if [ "$EUID" -ne 0 ]
   exit
 fi
 
+DPID=
 if [ "$(ps aux | grep -c Karabiner-VirtualHIDDevice-Daemon)" -le "1" ]; then
     /Library/Application\ Support/org.pqrs/Karabiner-DriverKit-VirtualHIDDevice/Applications/Karabiner-VirtualHIDDevice-Daemon.app/Contents/MacOS/Karabiner-VirtualHIDDevice-Daemon &
+    DPI=$!
 fi
 
+VKPID=
+KPID=
+
+handle_sigint() {
+  echo "Ctrl+C detected. Performing cleanup..."
+  if [ -n "$VKPID" ]; then
+    echo "Killing vk agent pid $VKPID";
+    kill $VKPID;
+  fi
+  if [ -n "$KPID" ]; then
+    echo "Killing kanata pid $KPID";
+    kill $KPID;
+  fi
+  if [ -n "$DPID" ]; then
+    echo "Killing kanata pid $DPID";
+    kill $DPID;
+  fi
+  exit 1 # Exit the script with an error code
+}
+
+# Trap the SIGINT signal (Ctrl+C) and call the handle_sigint function
+trap handle_sigint INT
+
 while true; do
-    HEXINPUT=false kanata $@
+    if [ -n "$VKPID" ]; then
+        echo "Killing vk agent pid $VKPID";
+        kill $VKPID;
+    fi
+    HEXINPUT=false kanata -n -p 5829 $@ &
+    KPID=$!
+    sleep 1;
+    /opt/homebrew/Cellar/kanata-vk-agent/0.1.0/bin/kanata-vk-agent -b com.parallels.desktop.console &
+    VKPID=$!
+    wait $KPID
 done
