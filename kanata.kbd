@@ -99,6 +99,8 @@
   a @á s @â d @ó f @ô
   z @à x @ã c @ç v @õ
 
+  ret rsft
+
 )
 
 (deflayermap (function)
