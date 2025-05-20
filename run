@@ -38,7 +38,7 @@ while true; do
         echo "Killing vk agent pid $VKPID";
         kill $VKPID;
     fi
-    sudo -A kanata -n -p 5829 $@ &
+    sudo -A nice -n -10 kanata -n -p 5829 $@ &
     KPID=$!
 
     # Wait for port 5829 to be open

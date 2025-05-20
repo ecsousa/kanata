@@ -12,7 +12,7 @@
 (defcfg
   process-unmapped-keys yes
   concurrent-tap-hold yes
-  rapid-event-delay 7
+  ;;rapid-event-delay 20
   macos-dev-names-exclude (
     "Basilisk X HyperSpeed"
   )
@@ -35,6 +35,7 @@
   com.microsoft.rdc.macos (layer-toggle win-on-mac)
 ))
 
+(include "release-keys.kbd")
 
 (deflayermap (base)
   caps  (t! tap-hold-layer esc misc)
@@ -43,9 +44,13 @@
   [ (t! hold-layer function)
 
 
-  ' (tap-hold $tt $ht ' (layer-toggle accent))
+  ' (t! release-keys
+      (tap-hold $tt $ht ' (layer-toggle accent))
+    )
 
-  ;     (t! hold-layer cursor)
+  ; (t! release-keys
+      (t! hold-layer cursor)
+    )
 )
 
 (platform (macos) (deflayermap win-on-mac
