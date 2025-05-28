@@ -1,12 +1,13 @@
 #!/bin/sh
-#if [ "$EUID" -ne 0 ]
-  #then echo "Please run as root"
-  #exit
-#fi
+if [ "$EUID" -ne 0 ]; then
+  exec sudo -A "$0" "$@"
+  exit
+fi
 
 DPID=
 if [ "$(ps aux | grep -c Karabiner-VirtualHIDDevice-Daemon)" -le "1" ]; then
-    sudo -A /Library/Application\ Support/org.pqrs/Karabiner-DriverKit-VirtualHIDDevice/Applications/Karabiner-VirtualHIDDevice-Daemon.app/Contents/MacOS/Karabiner-VirtualHIDDevice-Daemon &
+    echo "Starting Karabiner"
+    nice -n -20 /Library/Application\ Support/org.pqrs/Karabiner-DriverKit-VirtualHIDDevice/Applications/Karabiner-VirtualHIDDevice-Daemon.app/Contents/MacOS/Karabiner-VirtualHIDDevice-Daemon &
     DPI=$!
 fi
 
@@ -38,7 +39,8 @@ while true; do
         echo "Killing vk agent pid $VKPID";
         kill $VKPID;
     fi
-    sudo -A nice -n -10 kanata -n -p 5829 $@ &
+    MD5=$(kanata -l | sort -u | md5)
+    nice -n -20 kanata -n -p 5829 $@ &
     KPID=$!
 
     # Wait for port 5829 to be open
@@ -49,5 +51,15 @@ while true; do
 
     /opt/homebrew/Cellar/kanata-vk-agent/0.1.0/bin/kanata-vk-agent -b com.parallels.desktop.console -b com.microsoft.rdc.macos &
     VKPID=$!
-    wait $KPID
+
+    CURRENT_MD5=$(kanata -l | sort -u | md5)
+    while [ "$MD5" == "$CURRENT_MD5" ]; do
+        sleep 4;
+        CURRENT_MD5=$(kanata -l | sort -u | md5)
+    done;
+
+    if [ -n "$KPID" ]; then
+        echo "Killing kanata pid $KPID";
+        kill $KPID;
+    fi
 done
