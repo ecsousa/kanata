@@ -4,6 +4,7 @@
   tap-timeout   75
   hold-timeout  225
   macro-delay   10
+  combo-timeout 35
   tt $tap-timeout
   ht $hold-timeout
   md $macro-delay
@@ -29,6 +30,16 @@
 (deftemplate tap-hold-layer (key layer) (tap-hold 0 $ht $key (layer-toggle $layer)))
 
 (defsrc)
+
+
+(defchordsv2
+	(j k) ret $combo-timeout first-release ()
+	(i o) bspc $combo-timeout first-release ()
+	(f d) esc $combo-timeout first-release ()
+	(w e) tab $combo-timeout first-release ()
+
+  (u i) (layer-toggle accent) $combo-timeout first-release ()
+)
 
 (platform (macos) (defvirtualkeys
   com.parallels.desktop.console (layer-toggle win-on-mac)
