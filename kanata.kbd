@@ -33,12 +33,13 @@
 
 
 (defchordsv2
-	(j k) ret $combo-timeout first-release ()
-	(i o) bspc $combo-timeout first-release ()
-	(f d) esc $combo-timeout first-release ()
-	(w e) tab $combo-timeout first-release ()
+  (j k) ret $combo-timeout first-release ()
+  (i o) bspc $combo-timeout first-release ()
+  (f d) esc $combo-timeout first-release ()
+  (w e) tab $combo-timeout first-release ()
 
   (u i) (layer-toggle accent) $combo-timeout first-release ()
+  (a s) (layer-toggle vim-nav) $combo-timeout first-release ()
 )
 
 (platform (macos) (defvirtualkeys
@@ -142,6 +143,13 @@
   q  f7 w  f8 e  f9 r  f10
   a  f4 s  f5 d  f6 f  f11
   z  f1 x  f2 c  f3 v  f12
+)
+
+(deflayermap (vim-nav)
+  h left
+  j down
+  k up
+  l right
 )
 
 (deflayermap (vimnav-next)
