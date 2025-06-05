@@ -44,10 +44,11 @@ while true; do
     KPID=$!
 
     # Wait for port 5829 to be open
+    echo "Waiting for port 5829 to open...";
     while ! nc -z localhost 5829; do
-        echo "Waiting for port 5829 to open...";
         sleep 1;
     done
+    echo "Port 5829 opened...";
 
     /opt/homebrew/Cellar/kanata-vk-agent/0.1.0/bin/kanata-vk-agent -b com.parallels.desktop.console -b com.microsoft.rdc.macos &
     VKPID=$!
