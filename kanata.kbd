@@ -4,7 +4,7 @@
   tap-timeout   75
   hold-timeout  225
   macro-delay   10
-  combo-timeout 35
+  combo-timeout 50
   tt $tap-timeout
   ht $hold-timeout
   md $macro-delay
@@ -36,7 +36,7 @@
   (j k) ret $combo-timeout first-release ()
   (i o) bspc $combo-timeout first-release ()
   (f d) esc $combo-timeout first-release ()
-  (w e) tab $combo-timeout first-release ()
+  (e r) tab $combo-timeout first-release ()
 
   (u i) (layer-toggle accent) $combo-timeout first-release ()
   (a s) (layer-toggle vim-nav) $combo-timeout first-release ()
