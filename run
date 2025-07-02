@@ -39,7 +39,8 @@ while true; do
         echo "Killing vk agent pid $VKPID";
         kill $VKPID;
     fi
-    MD5=$(kanata -l | sort -u | md5)
+    echo "kanata list"
+    MD5=$(kanata -l | sed -e /Karabiner/d | sort -u | md5)
     nice -n -20 kanata -n -p 5829 $@ &
     KPID=$!
 
@@ -53,14 +54,20 @@ while true; do
     /opt/homebrew/Cellar/kanata-vk-agent/0.1.0/bin/kanata-vk-agent -b com.parallels.desktop.console -b com.microsoft.rdc.macos &
     VKPID=$!
 
-    CURRENT_MD5=$(kanata -l | sort -u | md5)
+    CURRENT_MD5=$(kanata -l | sed -e /Karabiner/d | sort -u | md5)
     while [ "$MD5" == "$CURRENT_MD5" ]; do
-        sleep 4;
-        CURRENT_MD5=$(kanata -l | sort -u | md5)
+        sleep 2;
+        CURRENT_MD5=$(kanata -l | sed -e /Karabiner/d | sort -u | md5)
     done;
+    echo "kanata list"
+
+    echo "MD5: $MD5"
+    echo "CURRENT_MD5: $CURRENT_MD5"
 
     if [ -n "$KPID" ]; then
         echo "Killing kanata pid $KPID";
-        kill $KPID;
+        kill -s 9 $KPID;
+        sleep 2;
     fi
+
 done
